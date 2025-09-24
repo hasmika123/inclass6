@@ -5,16 +5,13 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
       title: 'Rocket Launch Controller',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // A widget that will be started on the application startup
       home: CounterWidget(),
     );
   }
@@ -26,8 +23,27 @@ class CounterWidget extends StatefulWidget {
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
-  //set counter value
   int _counter = 0;
+
+  void _increment() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrement() {
+    setState(() {
+      if (_counter > 0) {
+        _counter--;
+      }
+    });
+  }
+
+  void _reset() {
+    setState(() {
+      _counter = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,17 +51,16 @@ class _CounterWidgetState extends State<CounterWidget> {
       appBar: AppBar(
         title: const Text('Rocket Launch Controller'),
       ),
-//set up the widget alignement
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
             child: Container(
+              padding: EdgeInsets.all(20),
               color: Colors.blue,
               child: Text(
-                //to displays current number
                 '$_counter',
-                style: TextStyle(fontSize: 50.0),
+                style: TextStyle(fontSize: 50.0, color: Colors.white),
               ),
             ),
           ),
@@ -61,6 +76,35 @@ class _CounterWidgetState extends State<CounterWidget> {
             activeColor: Colors.blue,
             inactiveColor: Colors.red,
           ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: _increment,
+            child: Text("Ignite"),
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+            ),
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: _decrement,
+                child: Text("Abort"),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                ),
+              ),
+              SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: _reset,
+                child: Text("Reset"),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
